@@ -3,6 +3,7 @@ package vn.yourname.tutien.util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,7 +24,7 @@ public class ItemManager {
                 "",
                 ChatColor.DARK_RED + "» Vật Phẩm Linh Hồn «"
         ));
-        meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 1, true);
+        meta.addEnchant(Enchantment.LUCK, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(new NamespacedKey(TuTienPlugin.getInstance(), "core_item"), PersistentDataType.STRING, "tu_luyen_item");
         item.setItemMeta(meta);
@@ -40,7 +41,7 @@ public class ItemManager {
                 "",
                 ChatColor.DARK_RED + "» Vật Phẩm Linh Hồn «"
         ));
-        meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 1, true);
+        meta.addEnchant(Enchantment.LUCK, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(new NamespacedKey(TuTienPlugin.getInstance(), "core_item"), PersistentDataType.STRING, "dot_pha_item");
         item.setItemMeta(meta);
@@ -72,7 +73,7 @@ public class ItemManager {
                 "",
                 ChatColor.DARK_GRAY + "Bị động: Kích hoạt khi máu dưới 15%."
         ));
-        meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 1, true);
+        meta.addEnchant(Enchantment.LUCK, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(new NamespacedKey(TuTienPlugin.getInstance(), "item_id"), PersistentDataType.STRING, "the_menh_phu");
         item.setItemMeta(meta);
@@ -89,7 +90,7 @@ public class ItemManager {
                 "",
                 ChatColor.YELLOW + "Chuột phải để sử dụng."
         ));
-        meta.addEnchant(org.bukkit.enchantments.Enchantment.SOUL_SPEED, 1, true);
+        meta.addEnchant(Enchantment.SOUL_SPEED, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(new NamespacedKey(TuTienPlugin.getInstance(), "item_id"), PersistentDataType.STRING, "dai_na_di_phu");
         item.setItemMeta(meta);
@@ -107,7 +108,7 @@ public class ItemManager {
                 ChatColor.YELLOW + "Đặt vào ô tay phụ (F) để kích hoạt.",
                 ChatColor.DARK_GRAY + "Cảnh giới từ Hóa Thần trở lên có thể nhìn thấu."
         ));
-        meta.addEnchant(org.bukkit.enchantments.Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(new NamespacedKey(TuTienPlugin.getInstance(), "item_id"), PersistentDataType.STRING, "an_tuc_quyet");
         item.setItemMeta(meta);
