@@ -2,7 +2,7 @@ package vn.yourname.tutien.command;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Particle;
+import org.bukkit.Particle; // Sửa lỗi
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -70,7 +70,7 @@ public class DotPhaCommand implements CommandExecutor {
         player.sendMessage(ChatColor.RED + "Linh khí phản phệ, tu vi của ngươi bị hao tổn!");
         bossBarManager.updateBossBar(player, data);
         player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.7f, 1.0f);
-        player.getWorld().spawnParticle(Particle.SMOKE_LARGE, player.getLocation().add(0, 1, 0), 30, 0.5, 0.5, 0.5, 0.05);
+        player.getWorld().spawnParticle(Particle.LARGE_SMOKE, player.getLocation().add(0, 1, 0), 30, 0.5, 0.5, 0.5, 0.05); // Sửa tên
     }
 
     private void performMinorBreakthrough(Player player, boolean isFirstBreakthrough) {
@@ -85,7 +85,7 @@ public class DotPhaCommand implements CommandExecutor {
         player.sendMessage(ChatColor.YELLOW + "Cảnh giới của bạn đã tăng lên: " + canhGioiDisplay);
         attributeManager.updateAttributes(player, data);
         bossBarManager.updateBossBar(player, data);
-        player.getWorld().spawnParticle(Particle.TOTEM, player.getLocation().add(0, 1, 0), 50, 0.5, 0.5, 0.5, 0.1);
+        player.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, player.getLocation().add(0, 1, 0), 50, 0.5, 0.5, 0.5, 0.1); // Sửa tên
     }
 
     private void startTribulation(Player player) {
@@ -100,4 +100,4 @@ public class DotPhaCommand implements CommandExecutor {
         double damage = currentRealm.getTribulationDamage();
         new ThienKiepTask(plugin, player, duration, damage, playerManager, thienKiepManager, bossBarManager, attributeManager).runTaskTimer(plugin, 20L, 20L);
     }
-                           }
+}
