@@ -1,8 +1,6 @@
 package vn.yourname.tutien.listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +9,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import vn.yourname.tutien.data.CanhGioi;
 import vn.yourname.tutien.data.PlayerData;
 import vn.yourname.tutien.manager.AttributeManager;
@@ -23,12 +22,14 @@ public class PlayerDeathListener implements Listener {
     private final PlayerManager playerManager;
     private final BossBarManager bossBarManager;
     private final SoulManager soulManager;
+    private final AttributeManager attributeManager;
 
-    public PlayerDeathListener(JavaPlugin plugin, PlayerManager pm, BossBarManager bbm, SoulManager sm) {
+    public PlayerDeathListener(JavaPlugin plugin, PlayerManager pm, BossBarManager bbm, SoulManager sm, AttributeManager am) {
         this.plugin = plugin;
         this.playerManager = pm;
         this.bossBarManager = bbm;
         this.soulManager = sm;
+        this.attributeManager = am;
     }
 
     @EventHandler
@@ -49,7 +50,7 @@ public class PlayerDeathListener implements Listener {
             soulManager.setRemnantSoul(player);
             event.setDeathMessage(ChatColor.DARK_AQUA + "☯ " + player.getName() + " bị " + killerName + " đánh cho hồn phi phách tán! ☯");
         } else if (currentRealm.ordinal() >= CanhGioi.TRUC_CO.ordinal()) {
-            soulManager.shatterSoul(player); // Trọng tu thực chất là tan biến linh hồn
+            soulManager.shatterSoul(player);
             event.setDeathMessage(ChatColor.DARK_RED + "☠ " + player.getName() + " đã bị " + killerName + " trảm sát, trọng tu từ đầu! ☠");
         }
     }
@@ -63,8 +64,7 @@ public class PlayerDeathListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                AttributeManager am = new AttributeManager(soulManager); // Cần instance của AM
-                am.updateAttributes(player, playerManager.getPlayerData(player));
+                attributeManager.updateAttributes(player, playerManager.getPlayerData(player));
                 bossBarManager.updateBossBar(player, playerManager.getPlayerData(player));
             }
         }.runTaskLater(plugin, 1L);
