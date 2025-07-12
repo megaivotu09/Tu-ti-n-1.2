@@ -3,6 +3,8 @@ package vn.yourname.tutien.task;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -52,7 +54,7 @@ public class ThienKiepTask extends BukkitRunnable {
         this.cancel();
         thienKiepManager.endTribulation(player.getUniqueId());
         player.teleport(startLocation.getWorld().getHighestBlockAt(startLocation).getLocation().add(0, 1, 0));
-        if (player.getGameMode() != GameMode.CREATIVE) {
+        if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
             player.setAllowFlight(false);
             player.setFlying(false);
         }
@@ -61,7 +63,13 @@ public class ThienKiepTask extends BukkitRunnable {
         String canhGioiDisplay = playerData.getCanhGioi().getColor() + playerData.getCanhGioi().getDisplayName() + " - Tầng " + playerData.getTieuCanhGioi();
         player.sendMessage(ChatColor.YELLOW + "Cảnh giới của bạn đã tăng lên: " + canhGioiDisplay);
         attributeManager.updateAttributes(player, playerData);
-        player.setHealth(player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue());
+        
+        // SỬA LỖI Ở ĐÂY
+        AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (maxHealth != null) {
+            player.setHealth(maxHealth.getValue());
+        }
+        
         bossBarManager.updateBossBar(player, playerData);
     }
     
@@ -70,7 +78,7 @@ public class ThienKiepTask extends BukkitRunnable {
         thienKiepManager.endTribulation(player.getUniqueId());
         if (player.isOnline() && !player.isDead()) {
              player.teleport(startLocation.getWorld().getHighestBlockAt(startLocation).getLocation().add(0, 1, 0));
-            if (player.getGameMode() != GameMode.CREATIVE) {
+            if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
                 player.setAllowFlight(false);
                 player.setFlying(false);
             }
@@ -79,7 +87,7 @@ public class ThienKiepTask extends BukkitRunnable {
         player.sendMessage(ChatColor.RED + message);
         
         CanhGioi.RealmData realmData = CanhGioi.getRealmDataFor(playerData.getTotalLinhKhi());
-        double penalty = (realmData.linhKhiKetThuc - realmData.linhKhiBatDau) * 0.20;
+        double penalty = (realmData.linhKhiKetThuc - realmData.linhKhiBatDau) * 0.20; // Có thể đưa vào config
         playerData.setTotalLinhKhi(Math.max(realmData.linhKhiBatDau, playerData.getTotalLinhKhi() - penalty));
         bossBarManager.updateBossBar(player, playerData);
     }
