@@ -2,6 +2,7 @@ package vn.yourname.tutien.listener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,8 +44,11 @@ public class InjuryListener implements Listener {
             combatManager.tag((Player) event.getDamager());
         }
         combatManager.tag(victim);
+        
+        AttributeInstance maxHealthAttribute = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (maxHealthAttribute == null) return;
 
-        double maxHealth = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        double maxHealth = maxHealthAttribute.getValue();
         double currentHealth = victim.getHealth() - event.getFinalDamage();
         if (currentHealth <= (maxHealth * ConfigManager.INJURY_THRESHOLD) && combatManager.isInCombat(victim) && !injuryManager.isInjured(victim)) {
             applyGrievousInjury(victim);
