@@ -6,8 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.attribute.Attribute; // Thêm import
+import org.bukkit.attribute.AttributeInstance; // Thêm import
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -45,9 +45,9 @@ public class AmuletListener implements Listener {
     public void onPlayerTakeFatalDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
-        AttributeInstance maxHealthAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance maxHealthAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH); // Sửa ở đây
         if (maxHealthAttribute == null) return;
-        
+
         double maxHealth = maxHealthAttribute.getValue();
         double currentHealth = player.getHealth();
         double damage = event.getFinalDamage();
@@ -119,7 +119,7 @@ public class AmuletListener implements Listener {
         player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 100);
         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
         player.teleport(safeLocation);
-        AttributeInstance maxHealthAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance maxHealthAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH); // Sửa ở đây
         if (maxHealthAttribute != null) {
              player.setHealth(Math.min(player.getHealth() + maxHealthAttribute.getValue() * 0.2, maxHealthAttribute.getValue()));
         }
