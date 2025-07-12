@@ -1,0 +1,20 @@
+# Cấu hình Plugin Tu Tiên
+tu-luyen:
+  linh-khi-moi-giay: 3.0
+  ngu-kiem-tieu-hao: 5.0
+dot-pha:
+  ty-le-that-bai: 0.25
+  phan-tram-phat: 0.5
+chien-dau:
+  nguong-trong-thuong: 0.03
+  thoi-gian-trong-thuong: 20
+  ap-che:
+    bonus-moi-canh-gioi: 0.15
+    giam-tru-moi-canh-gioi: 0.30
+tan-hon:
+  linh-khi-hao-mon: 2.0
+  giam-suc-manh: 0.5
+vat-pham:
+  nguong-the-menh-phu: 0.15
+  dich-chuyen-toi-thieu: 1000
+  dich-chuyen-toi-da: 50000
