@@ -64,7 +64,6 @@ public class ThienKiepTask extends BukkitRunnable {
         player.sendMessage(ChatColor.YELLOW + "Cảnh giới của bạn đã tăng lên: " + canhGioiDisplay);
         attributeManager.updateAttributes(player, playerData);
         
-        // SỬA LỖI Ở ĐÂY
         AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (maxHealth != null) {
             player.setHealth(maxHealth.getValue());
@@ -87,7 +86,7 @@ public class ThienKiepTask extends BukkitRunnable {
         player.sendMessage(ChatColor.RED + message);
         
         CanhGioi.RealmData realmData = CanhGioi.getRealmDataFor(playerData.getTotalLinhKhi());
-        double penalty = (realmData.linhKhiKetThuc - realmData.linhKhiBatDau) * 0.20; // Có thể đưa vào config
+        double penalty = (realmData.linhKhiKetThuc - realmData.linhKhiBatDau) * 0.20;
         playerData.setTotalLinhKhi(Math.max(realmData.linhKhiBatDau, playerData.getTotalLinhKhi() - penalty));
         bossBarManager.updateBossBar(player, playerData);
     }
