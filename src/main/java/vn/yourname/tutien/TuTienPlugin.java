@@ -5,6 +5,7 @@ import vn.yourname.tutien.command.*;
 import vn.yourname.tutien.listener.*;
 import vn.yourname.tutien.manager.*;
 import vn.yourname.tutien.task.*;
+import vn.yourname.tutien.util.ItemManager; // Import ItemManager
 
 public class TuTienPlugin extends JavaPlugin {
     private static TuTienPlugin instance;
@@ -24,7 +25,6 @@ public class TuTienPlugin extends JavaPlugin {
         InjuryManager injuryManager = new InjuryManager();
         BossBarManager bossBarManager = new BossBarManager(playerManager);
         
-        // Xử lý dependency vòng tròn giữa SoulManager và AttributeManager
         SoulManager soulManager = new SoulManager(this, playerManager, bossBarManager);
         AttributeManager attributeManager = new AttributeManager(soulManager);
         soulManager.setAttributeManager(attributeManager);
