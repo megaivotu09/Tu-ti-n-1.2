@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import vn.yourname.tutien.data.PlayerData;
 import vn.yourname.tutien.manager.PlayerManager;
-import java.util.Map; // << THÊM DÒNG NÀY
+import java.util.Map;
 import java.util.UUID;
 
 public class XoaAnCommand implements CommandExecutor {
