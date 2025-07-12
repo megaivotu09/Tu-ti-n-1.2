@@ -7,12 +7,11 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
+import org.bukkit.event.block.Action; // << THÊM DÒNG NÀY
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -57,6 +56,7 @@ public class AmuletListener implements Listener {
                     if (itemId != null && itemId.equals("the_menh_phu")) {
                         event.setCancelled(true);
                         item.setAmount(item.getAmount() - 1);
+                        player.getInventory().setItem(i, item);
                         activateTheMenhPhu(player);
                         return;
                     }
@@ -74,7 +74,7 @@ public class AmuletListener implements Listener {
 
         String itemId = item.getItemMeta().getPersistentDataContainer().get(itemIdKey, PersistentDataType.STRING);
         if (itemId == null) return;
-        
+
         event.setCancelled(true);
         switch (itemId) {
             case "tu_hon_dan":
@@ -94,10 +94,37 @@ public class AmuletListener implements Listener {
     }
 
     private void activateTheMenhPhu(Player player) {
-        // ... Logic tìm vị trí an toàn và dịch chuyển
+        Location currentLocation = player.getLocation();
+        Random random = new Random();
+        int attempt = 0;
+        Location safeLocation = null;
+
+        while (attempt < 20 && safeLocation == null) {
+            int x = currentLocation.getBlockX() + random.nextInt(200) - 100;
+            int z = currentLocation.getBlockZ() + random.nextInt(200) - 100;
+            Location randomLoc = currentLocation.getWorld().getHighestBlockAt(x, z).getLocation().add(0.5, 1, 0.5);
+            if (isLocationSafe(randomLoc)) {
+                safeLocation = randomLoc;
+            }
+            attempt++;
+        }
+        if (safeLocation == null) {
+            safeLocation = player.getWorld().getSpawnLocation();
+        }
+
+        player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation().add(0, 1, 0), 100);
+        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+        player.teleport(safeLocation);
+        player.setHealth(Math.min(player.getHealth() + player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 0.2, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
         player.sendMessage(ChatColor.GOLD + "Thế Mệnh Phù đã kích hoạt, cứu ngươi một mạng!");
     }
-
+    
+    private boolean isLocationSafe(Location location) {
+        Material feet = location.getBlock().getType();
+        Material head = location.clone().add(0, 1, 0).getBlock().getType();
+        return !feet.isSolid() && !head.isSolid();
+    }
+    
     private void activateDaiNaDiPhu(Player player, ItemStack amulet) {
         player.sendMessage(ChatColor.LIGHT_PURPLE + "Đại Na Di Phù đang được kích hoạt...");
         amulet.setAmount(amulet.getAmount() - 1);
