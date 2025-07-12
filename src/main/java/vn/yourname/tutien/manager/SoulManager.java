@@ -20,7 +20,7 @@ public class SoulManager {
     private final JavaPlugin plugin;
     private final PlayerManager playerManager;
     private final BossBarManager bossBarManager;
-    private AttributeManager attributeManager;
+    private AttributeManager attributeManager; // Sẽ được inject sau
 
     public SoulManager(JavaPlugin plugin, PlayerManager pm, BossBarManager bbm) {
         this.plugin = plugin;
@@ -28,20 +28,23 @@ public class SoulManager {
         this.bossBarManager = bbm;
     }
 
+    // Setter để giải quyết dependency vòng tròn
     public void setAttributeManager(AttributeManager attributeManager) {
         this.attributeManager = attributeManager;
     }
 
     public boolean isRemnantSoul(Player player) { return remnantSouls.contains(player.getUniqueId()); }
     public void setRemnantSoul(Player player) { remnantSouls.add(player.getUniqueId()); }
-    public void removeRemnantSoul(Player player) { remnantSouls.remove(player.getUniqueId()); }
+    public void removeRemnantSoul(Player player) { 
+        remnantSouls.remove(player.getUniqueId());
+        player.removePotionEffect(PotionEffectType.INVISIBILITY);
+    }
 
     public void shatterSoul(Player player) {
         PlayerData data = playerManager.getPlayerData(player);
         if (data == null) return;
         
         this.removeRemnantSoul(player);
-        player.removePotionEffect(PotionEffectType.INVISIBILITY);
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
             player.setAllowFlight(false);
             player.setFlying(false);
