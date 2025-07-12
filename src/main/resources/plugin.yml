@@ -1,0 +1,43 @@
+name: TuTienPlugin
+version: 3.0
+main: vn.yourname.tutien.TuTienPlugin
+api-version: '1.21'
+author: YourName
+description: Mot the gioi tu tien day du.
+commands:
+  tuvi:
+    description: Kiem tra thong tin tu luyen.
+    aliases: [nhintuvi]
+  dotpha:
+    description: Tien hanh dot pha khi du linh khi.
+  tuluyen:
+    description: Bat/tat trang thai tu luyen.
+  ngukiem:
+    description: Bat/tat trang thai Ngự Kiếm Phi Hành.
+  anki:
+    description: Đặt ấn ký lên người chơi khác.
+  xoaan:
+    description: Xóa ấn ký đã đặt.
+  dsanki:
+    description: Xem danh sách ấn ký đã đặt.
+  setcanhgioi:
+    description: (Admin) Dat canh gioi cho nguoi choi.
+    permission: tutien.admin.setcanhgioi
+  setlinhcan:
+    description: (Admin) Dat linh can cho nguoi choi.
+    permission: tutien.admin.setlinhcan
+  setlinhkhi:
+    description: (Admin) Dat tong linh khi cho nguoi choi.
+    permission: tutien.admin.setlinhkhi
+  tuhondan:
+    description: (Admin) Trao Tụ Hồn Đan.
+    permission: tutien.admin.tuhondan
+  themenhphu:
+    description: (Admin) Trao Thế Mệnh Phù.
+    permission: tutien.admin.themenhphu
+  dichchuyenphu:
+    description: (Admin) Trao Đại Na Di Phù.
+    permission: tutien.admin.dichchuyenphu
+  giautuvi:
+    description: (Admin) Trao Ẩn Tức Quyết.
+    permission: tutien.admin.giautuvi
