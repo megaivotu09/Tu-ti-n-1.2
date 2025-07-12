@@ -45,7 +45,7 @@ public class InjuryListener implements Listener {
         combatManager.tag(victim);
 
         double maxHealth = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-        double currentHealth = victim.getHealth();
+        double currentHealth = victim.getHealth() - event.getFinalDamage();
         if (currentHealth <= (maxHealth * ConfigManager.INJURY_THRESHOLD) && combatManager.isInCombat(victim) && !injuryManager.isInjured(victim)) {
             applyGrievousInjury(victim);
         }
@@ -54,13 +54,13 @@ public class InjuryListener implements Listener {
     private void applyGrievousInjury(Player player) {
         injuryManager.setInjured(player);
         player.sendTitle(ChatColor.DARK_RED + "TRỌNG THƯƠNG!", ChatColor.RED + "Bạn mất khả năng chiến đấu!", 10, 40, 10);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, ConfigManager.INJURY_DURATION * 20, 4));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, ConfigManager.INJURY_DURATION * 20, 4));
         player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, ConfigManager.INJURY_DURATION * 20, 4));
         
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             if (injuryManager.isInjured(player)) {
                 injuryManager.removeInjured(player);
-                player.removePotionEffect(PotionEffectType.SLOW);
+                player.removePotionEffect(PotionEffectType.SLOWNESS);
                 player.removePotionEffect(PotionEffectType.WEAKNESS);
                 player.sendMessage(ChatColor.GREEN + "Bạn đã tạm thời hồi phục.");
             }
